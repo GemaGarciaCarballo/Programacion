@@ -1,4 +1,5 @@
 localhost/phpmyadmin - para usar la base de datos
-./lampp start/stop/reload para usar XAMPP
-manager-linux-x64.run para abrir la interfaz gráfica, pero no sé el comando. 
+cd /opt/lampp para encontrar XAMPP
+./lampp start/stop/reload para usar XAMPP desde comandos
+desde lampp hacer sudo ./manager-linux-x64.run para abrir la interfaz gráfica.
 Para crear el acceso directo, hay que indicarle a dónde ir y esa es la dirección.
