@@ -8,3 +8,8 @@ apt install para instalar desde repo
 dpkg -i para instalar algo descargado
 
 Importar VDI en máquina virtual: a la hora de crearla, en la parte de disco duro, seleccionar usar disco duro virtual existente.
+
+En la carpeta /opt/lampp/phpmyadmin: sudo nano config.inc.php para cambia la primera linea de First Server: Authentification type por "cookie" 
+y la segunda eliminamos "root". Así podemos cerrar sesión en la app de phpmyadmin
+
+
