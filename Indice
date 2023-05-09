@@ -12,4 +12,7 @@ Importar VDI en máquina virtual: a la hora de crearla, en la parte de disco dur
 En la carpeta /opt/lampp/phpmyadmin: sudo nano config.inc.php para cambia la primera linea de First Server: Authentification type por "cookie" 
 y la segunda eliminamos "root". Así podemos cerrar sesión en la app de phpmyadmin
 
+ip a para ver la ip de la maquina
+para conectarnos desde el pc local a la base de datos de la máquina virtual desde eclipse: en la url hay que poner la ip de la maquina y el puerto al que conectarse
+en la consola: ping <ip de la maquina> para comprobar si hay conexion entre el local y la maquina
 
