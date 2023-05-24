@@ -1,0 +1,129 @@
+package clases;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class BDManager {
+	private static Connection con = null;
+	
+	private static final String BD_HOST = "localhost";
+	private static final String BD_PORT = "3306";
+	private static final String BD_NAME = "juegoDamGGM";
+	private static final String BD_URL = "jdbc:mysql://" + BD_HOST + ":" + BD_PORT + "/" + BD_NAME + "?serverTimezone=UTC";
+	private static final String BD_USER = "dam2223";
+	private static final String BD_PASSW = "dam2223";
+	private static final String BD_MSQL_CON_OK = "CONECTADO CORRECTAMENTE";
+	private static final String BD_MSQL_CON_MAL = "ERROR DE CONEXIÓN";
+	
+	private static final String BD_RANK = "ranking";
+	private static final String BD_RANK_SELECT = "SELECT * FROM " + BD_RANK;
+	private static final String BD_RANK_NICK = "nickname";
+	private static final String BD_RANK_POINTS = "puntuacion";
+	
+	private static final String BD_HISTO = "ranking";
+	private static final String BD_HISTO_SELECT = "SELECT * FROM " + BD_RANK;
+	private static final String BD_HISTO_ID = "id_partida";
+	private static final String BD_HISTO_NICK = "nickname";
+	private static final String BD_HISTO_POINTS = "puntuacion";
+
+	public static boolean cargarDriver() {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			System.out.println("CARGADO DRIVER");
+			return true;
+		}catch(ClassNotFoundException ex) {
+			ex.printStackTrace();
+			return false;
+		}catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	public static boolean establecerConexion() {
+		try {
+			con = DriverManager.getConnection(BD_URL, BD_USER, BD_PASSW);
+			System.out.println("CONECTADO A BASE DE DATOS");
+			return true;
+		}catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	public static void cerrarConexion() {
+		try {
+			con.close();
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+	}
+	public static ResultSet getRanking(int resultSetType, int resultSetConcurrency) {
+		try {
+			Statement stmt = con.createStatement(resultSetType,resultSetConcurrency);
+			ResultSet rs = stmt.executeQuery(BD_RANK_SELECT);
+			return rs;
+		}catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+  	public static ResultSet getHistorico(int resultSetType, int resultSetConcurrency) {
+		try {
+			Statement stmt = con.createStatement(resultSetType,resultSetConcurrency);
+			ResultSet rs = stmt.executeQuery(BD_HISTO_SELECT);
+			return rs;
+		}catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	public static void mostrarRanking() {
+		try {
+			ResultSet rs = getRanking(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			while(rs.next()) {
+				String nick = rs.getString(BD_RANK_NICK);
+				int points = rs.getInt(BD_RANK_POINTS);
+				System.out.println(nick + " " + points);
+			}
+			rs.close();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void mostrarHistorico() {
+		try {
+			ResultSet rs = getHistorico(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			while(rs.next()) {
+				int id = rs.getInt(BD_HISTO_ID);
+				String nick = rs.getString(BD_HISTO_NICK);
+				int points = rs.getInt(BD_HISTO_POINTS);
+				System.out.println(id + " " + nick + " " + points);
+			}
+			rs.close();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+  	public static ResultSet getJugador(String nombre) {
+		try {
+			Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+			String sentencia = BD_RANK_SELECT + " WHERE " + BD_RANK_NICK + "='" + nombre + "';";
+			ResultSet rs = stmt.executeQuery(sentencia);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public static boolean existsJugador() {
+		
+	}
+	public static boolean annadirJugador() {
+		
+	}
+	public static boolean eliminarJugador() {
+		
+	}
+	public static boolean actualizarPuntosRanking() {
+		
+	}
